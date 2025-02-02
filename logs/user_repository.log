@@ -26,3 +26,9 @@
 [2025-02-02 13:47:10] User found: {"user_id":1,"username":"admin","password":"$2y$10$zlT8eR5ns4PTCijqOiIMJ.7uG2sgb9EjJNRdMBT0subCIfM\/TYxI2","first_name":"Faiyaz","last_name":"Rafeek","email":"faiyaz_rafeek@gmail.com","created_at":"2025-01-25 14:43:12","updated_at":"2025-02-02 12:38:56","updated_by":null}
 [2025-02-02 13:47:15] Finding user by ID: 1
 [2025-02-02 13:47:15] User found: {"user_id":1,"username":"admin","password":"$2y$10$zlT8eR5ns4PTCijqOiIMJ.7uG2sgb9EjJNRdMBT0subCIfM\/TYxI2","first_name":"Faiyaz","last_name":"Rafeek","email":"faiyaz_rafeek@gmail.com","created_at":"2025-01-25 14:43:12","updated_at":"2025-02-02 12:38:56","updated_by":null}
+[2025-02-02 14:24:13] Finding user by ID: 1
+[2025-02-02 14:24:13] User found: {"user_id":1,"username":"admin","password":"$2y$10$zlT8eR5ns4PTCijqOiIMJ.7uG2sgb9EjJNRdMBT0subCIfM\/TYxI2","first_name":"Faiyaz","last_name":"Rafeek","email":"faiyaz_rafeek@gmail.com","created_at":"2025-01-25 14:43:12","updated_at":"2025-02-02 12:38:56","updated_by":null}
+[2025-02-02 14:24:14] Finding user by ID: 1
+[2025-02-02 14:24:14] User found: {"user_id":1,"username":"admin","password":"$2y$10$zlT8eR5ns4PTCijqOiIMJ.7uG2sgb9EjJNRdMBT0subCIfM\/TYxI2","first_name":"Faiyaz","last_name":"Rafeek","email":"faiyaz_rafeek@gmail.com","created_at":"2025-01-25 14:43:12","updated_at":"2025-02-02 12:38:56","updated_by":null}
+[2025-02-02 14:26:04] Finding user by ID: 1
+[2025-02-02 14:26:04] User found: {"user_id":1,"username":"admin","password":"$2y$10$zlT8eR5ns4PTCijqOiIMJ.7uG2sgb9EjJNRdMBT0subCIfM\/TYxI2","first_name":"Faiyaz","last_name":"Rafeek","email":"faiyaz_rafeek@gmail.com","created_at":"2025-01-25 14:43:12","updated_at":"2025-02-02 12:38:56","updated_by":null}
