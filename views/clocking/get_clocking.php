@@ -1,8 +1,8 @@
 <?php
-require_once __DIR__ . '/../config.php';
-require_once __DIR__ . '/../autoload.php';
-require_once __DIR__ . '/../database/DatabaseHandler.php';
-require_once __DIR__ . '/../controllers/ClockingController.php';
+require_once __DIR__ . '/../../config.php';
+require_once __DIR__ . '/../../autoload.php';
+require_once __DIR__ . '/../../database/DatabaseHandler.php';
+require_once __DIR__ . '/../../controllers/ClockingController.php';
 
 $dbHandler = new DatabaseHandler(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 $clockingController = new ClockingController($dbHandler);

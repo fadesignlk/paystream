@@ -1,10 +1,10 @@
 <?php
 // manage_employees.php (List, Update, and Delete Employees)
-require_once __DIR__ . '/../config.php';
-require_once __DIR__ . '/../autoload.php';
-require_once __DIR__ . '/../database/DatabaseHandler.php';
-require_once __DIR__ . '/../controllers/EmployeeController.php';
-require_once __DIR__ . '/../controllers/AuditLogController.php';
+require_once __DIR__ . '/../../config.php';
+require_once __DIR__ . '/../../autoload.php';
+require_once __DIR__ . '/../../database/DatabaseHandler.php';
+require_once __DIR__ . '/../../controllers/EmployeeController.php';
+require_once __DIR__ . '/../../controllers/AuditLogController.php';
 
 if (!isset($_SESSION['user'])) {
     header('Location: ' . BASE_URL . 'views/login.php');
@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_employee'])) {
 }
 
 $title = 'Manage Employees';
-include __DIR__ . '/components/header.php';
+include __DIR__ . '/../components/header.php';
 ?>
 
 <div class="container mt-4">
@@ -170,7 +170,6 @@ include __DIR__ . '/components/header.php';
 
 </div>
 
-<?php include __DIR__ . '/components/footer.php'; ?>
 
 <!-- Modal -->
 <div id="editModal" class="modal fade" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -248,4 +247,4 @@ include __DIR__ . '/components/header.php';
     }
 </script>
 
-<?php include __DIR__ . '/components/footer.php'; ?>
+<?php include __DIR__ . '/../components/footer.php'; ?>

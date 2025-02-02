@@ -1,11 +1,11 @@
 <?php
-require_once __DIR__ . '/../config.php';
-require_once __DIR__ . '/../autoload.php';
-require_once __DIR__ . '/../database/DatabaseHandler.php';
-require_once __DIR__ . '/../controllers/ClockingController.php';
-require_once __DIR__ . '/../controllers/EmployeeController.php';
-require_once __DIR__ . '/../controllers/AuditLogController.php';
-require_once __DIR__ . '/../controllers/TimeCardController.php';
+require_once __DIR__ . '/../../config.php';
+require_once __DIR__ . '/../../autoload.php';
+require_once __DIR__ . '/../../database/DatabaseHandler.php';
+require_once __DIR__ . '/../../controllers/ClockingController.php';
+require_once __DIR__ . '/../../controllers/EmployeeController.php';
+require_once __DIR__ . '/../../controllers/AuditLogController.php';
+require_once __DIR__ . '/../../controllers/TimeCardController.php';
 
 $dbHandler = new DatabaseHandler(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 $clockingController = new ClockingController($dbHandler);
@@ -121,7 +121,7 @@ foreach ($clockings as $clocking) {
 }
 
 $title = 'Manage Clocking Data';
-include __DIR__ . '/components/header.php';
+include __DIR__ . '/../components/header.php';
 ?>
 
 <div class="container mt-4">
@@ -279,4 +279,4 @@ include __DIR__ . '/components/header.php';
     });
 </script>
 
-<?php include __DIR__ . '/components/footer.php'; ?>
+<?php include __DIR__ . '/../components/footer.php'; ?>

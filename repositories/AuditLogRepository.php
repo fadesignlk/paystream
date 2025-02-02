@@ -1,6 +1,6 @@
 <?php
 
-require_once '../database/DatabaseHandler.php';
+require_once __DIR__ . '/../database/DatabaseHandler.php';
 
 class AuditLogRepository {
     private $dbHandler;

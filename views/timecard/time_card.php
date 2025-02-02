@@ -1,9 +1,9 @@
 <?php
-require_once __DIR__ . '/../config.php';
-require_once __DIR__ . '/../autoload.php';
-require_once __DIR__ . '/../database/DatabaseHandler.php';
-require_once __DIR__ . '/../controllers/TimeCardController.php';
-require_once __DIR__ . '/../controllers/EmployeeController.php';
+require_once __DIR__ . '/../../config.php';
+require_once __DIR__ . '/../../autoload.php';
+require_once __DIR__ . '/../../database/DatabaseHandler.php';
+require_once __DIR__ . '/../../controllers/TimeCardController.php';
+require_once __DIR__ . '/../../controllers/EmployeeController.php';
 
 $dbHandler = new DatabaseHandler(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 $timeCardController = new TimeCardController($dbHandler);
@@ -13,7 +13,7 @@ $timeCards = $timeCardController->getAllTimeCards();
 
 
 $title = 'Time Cards';
-include __DIR__ . '/components/header.php';
+include __DIR__ . '/../components/header.php';
 ?>
 
 <div class="container mt-4">
@@ -26,6 +26,7 @@ include __DIR__ . '/components/header.php';
                     <th>Employee Name</th>
                     <th>Clock In Date</th>
                     <th>Clock In Time</th>
+                    <th>Clock Out Date</th>
                     <th>Clock Out Time</th>
                     <th>Reported Hours</th>
                     <th>OT</th>
@@ -54,10 +55,9 @@ include __DIR__ . '/components/header.php';
                     <tr>
                         <td><?php echo htmlspecialchars($timeCard->getEmployeeId()); ?></td>
                         <td><?php echo htmlspecialchars($employee['employee_name']); ?></td>
-                        <td title="Shift started on <?php echo htmlspecialchars($timeCard->getClockInDate()); ?>">
-                            <?php echo htmlspecialchars($timeCard->getClockInDate()); ?>
-                        </td>
+                        <td><?php echo htmlspecialchars($timeCard->getClockInDate()); ?></td>
                         <td><?php echo htmlspecialchars($timeCard->getClockInTime()); ?></td>
+                        <td><?php echo htmlspecialchars($timeCard->getClockOutDate()); ?></td>
                         <td><?php echo htmlspecialchars($timeCard->getClockOutTime()); ?></td>
                         <td><?php echo htmlspecialchars($reportedHours); ?></td>
                         <td><?php echo htmlspecialchars($overtime); ?></td>
@@ -77,4 +77,4 @@ include __DIR__ . '/components/header.php';
     }
 </script>
 
-<?php include __DIR__ . '/components/footer.php'; ?>
+<?php include __DIR__ . '/../components/footer.php'; ?>

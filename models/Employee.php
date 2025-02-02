@@ -1,7 +1,7 @@
 <?php
 // classes/Employee.php
 
-require_once '../repositories/EmployeeRepository.php';
+require_once __DIR__ . '/../repositories/EmployeeRepository.php';
 
 
 class Employee {
