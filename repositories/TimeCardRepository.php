@@ -47,6 +47,7 @@ class TimeCardRepository {
     }
 
     public function findMostRecentClockIn($employeeId) {
+        $this->logger->log("Finding most recent clock-in for employee_id: $employeeId");
         $stmt = $this->dbHandler->prepare("SELECT * FROM time_cards WHERE employee_id = ? AND clock_out_time IS NULL ORDER BY clock_in_date DESC, clock_in_time DESC LIMIT 1");
         $stmt->bind_param("i", $employeeId);
         $stmt->execute();
@@ -55,10 +56,22 @@ class TimeCardRepository {
         if ($row) {
             $this->logger->log("Most recent clock-in found: " . json_encode($row));
             return new TimeCard($row['employee_id'], $row['clock_in_date'], $row['clock_in_time'], $row['clock_out_date'], $row['clock_out_time'], $row['reported_hours'], $row['overtime']);
-            $this->logger->log("Most recent clock-in found: " . $row['employee_id']);
-
+        } else {
+            $this->logger->log("No recent clock-in found for employee_id: $employeeId");
+            return null;
         }
-        $this->logger->log("No recent clock-in found for employee_id: $employeeId");
-        return null;
+    }
+
+    public function findAll() {
+        $this->logger->log("Fetching all time cards");
+        $stmt = $this->dbHandler->prepare("SELECT * FROM time_cards");
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $timeCards = [];
+        while ($row = $result->fetch_assoc()) {
+            $timeCards[] = new TimeCard($row['employee_id'], $row['clock_in_date'], $row['clock_in_time'], $row['clock_out_date'], $row['clock_out_time'], $row['reported_hours'], $row['overtime']);
+        }
+        $this->logger->log("Time cards fetched: " . json_encode($timeCards));
+        return $timeCards;
     }
 }

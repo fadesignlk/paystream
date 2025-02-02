@@ -37,6 +37,7 @@ class TimeCardController {
         $this->logger->log("Updating time card: employeeId=$employeeId, clockOutDate=$clockOutDate, clockOutTime=$clockOutTime");
         $timeCard = $this->timeCardRepository->findMostRecentClockIn($employeeId);
         if ($timeCard) {
+            $this->logger->log("Most recent clock-in found: " . json_encode($timeCard));
             $clockInDateTime = new DateTime($timeCard->getClockInDate() . ' ' . $timeCard->getClockInTime());
             $clockOutDateTime = new DateTime($clockOutDate . ' ' . $clockOutTime);
             $interval = $clockInDateTime->diff($clockOutDateTime);
@@ -62,5 +63,10 @@ class TimeCardController {
             $this->logger->log("No clock-in record found for employeeId=$employeeId to update with clockOutDate=$clockOutDate, clockOutTime=$clockOutTime");
             return false;
         }
+    }
+
+    public function getAllTimeCards() {
+        $this->logger->log("Fetching all time cards");
+        return $this->timeCardRepository->findAll();
     }
 }
