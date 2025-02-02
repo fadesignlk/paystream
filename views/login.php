@@ -23,7 +23,7 @@ include __DIR__ . '/components/header.php';
 <div class="d-flex justify-content-center align-items-center vh-100">
     <div class="card p-4" style="width: 100%; max-width: 400px;">
         <!-- <h2 class="mb-4 text-center">PayStream | Login</h2> -->
-        <img src="../assets/images/logo2.png" alt="PayStream Logo" class="img-fluid mb-3">
+        <img src="../assets/images/logo2.png" alt="PayStream Logo" class="img-fluid mb-3 w-75 mx-auto d-block">
         <?php if ($error): ?>
             <div class="alert alert-danger"><?php echo $error; ?></div>
         <?php endif; ?>

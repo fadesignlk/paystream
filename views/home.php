@@ -24,7 +24,7 @@ include __DIR__ . '/components/header.php';
     <h1 class="mb-4">Welcome, <?php echo htmlspecialchars($user->getUsername(), ENT_QUOTES); ?>!</h1>
     <div class="row">
         <div class="col-md-3">
-            <a href="add_employee.php" class="card mb-4 text-decoration-none text-dark">
+            <a href="./employee/add_employee.php" class="card mb-4 text-decoration-none text-dark">
                 <div class="card-body text-center">
                     <div class="mb-3">
                         <i class="fas fa-user-plus fa-3x"></i>
@@ -35,7 +35,7 @@ include __DIR__ . '/components/header.php';
             </a>
         </div>
         <div class="col-md-3">
-            <a href="manage_employee.php" class="card mb-4 text-decoration-none text-dark">
+            <a href="./employee/manage_employee.php" class="card mb-4 text-decoration-none text-dark">
                 <div class="card-body text-center">
                     <div class="mb-3">
                         <i class="fas fa-users-cog fa-3x"></i>
@@ -46,7 +46,7 @@ include __DIR__ . '/components/header.php';
             </a>
         </div>
         <div class="col-md-3">
-            <a href="manage_clocking.php" class="card mb-4 text-decoration-none text-dark">
+            <a href="./clocking/manage_clocking.php" class="card mb-4 text-decoration-none text-dark">
                 <div class="card-body text-center">
                     <div class="mb-3">
                         <i class="fas fa-clock fa-3x"></i>
@@ -57,7 +57,7 @@ include __DIR__ . '/components/header.php';
             </a>
         </div>
         <div class="col-md-3">
-            <a href="time_card.php" class="card mb-4 text-decoration-none text-dark">
+            <a href="./timecard/time_card.php" class="card mb-4 text-decoration-none text-dark">
                 <div class="card-body text-center">
                     <div class="mb-3">
                         <i class="fas fa-calendar-alt fa-3x"></i>

@@ -149,4 +149,4 @@ include __DIR__ . '/../components/header.php';
     </div>
 </div>
 
-<?php include __DIR__ . '/components/footer.php'; ?>
+<?php include __DIR__ . '/../components/footer.php'; ?>
