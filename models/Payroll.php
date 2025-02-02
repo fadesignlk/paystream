@@ -19,45 +19,36 @@ class Payroll {
         $this->payPeriodEnd = $payPeriodEnd;
     }
 
-    public function calculatePayroll($employee, $clockings) {
-        $totalSeconds = 0;
-        $lastClockIn = null;
-        foreach ($clockings as $clocking) {
-            if ($clocking['clocking_type'] == 'In') {
-                $lastClockIn = strtotime($clocking['clocking_time']);
-            } elseif ($clocking['clocking_type'] == 'Out' && $lastClockIn !== null) {
-                $clockOut = strtotime($clocking['clocking_time']);
-                $totalSeconds += ($clockOut - $lastClockIn);
-                $lastClockIn = null;
+    public function calculatePayroll($employee, $timecards) {
+        $totalHours = 0;
+        $totalOvertimeHours = 0;
+
+        foreach ($timecards as $timecard) {
+            $clockInTime = strtotime($timecard['clock_in_time']);
+            $clockOutTime = strtotime($timecard['clock_out_time']);
+            if ($clockInTime !== false && $clockOutTime !== false) {
+                $hoursWorked = ($clockOutTime - $clockInTime) / 3600; // Convert seconds to hours
+                $totalHours += $hoursWorked;
+
+                if ($hoursWorked > 8) {
+                    $totalOvertimeHours += $hoursWorked - 8;
+                    $totalHours -= $hoursWorked - 8;
+                }
             }
         }
 
-        $this->hoursWorked = $totalSeconds / 3600;
+        $this->hoursWorked = $totalHours;
+        $this->overtimeHours = $totalOvertimeHours;
 
-        if ($this->hoursWorked > 8) {
-            $this->overtimeHours = $this->hoursWorked - 8;
-            $this->hoursWorked = 8;
+        $employeeRate = $employee['employee_rate'];
+        if (is_numeric($employeeRate)) {
+            $this->totalEarnings = ($this->hoursWorked * $employeeRate) + ($this->overtimeHours * $employeeRate * 1.5);
+        } else {
+            $this->totalEarnings = 0;
         }
 
-        $this->totalEarnings = ($this->hoursWorked * $employee['employee_rate']) + ($this->overtimeHours * $employee['employee_rate'] * 1.5);
         $this->netPay = $this->totalEarnings - $this->deductions;
     }
-
-    // public function generatePayslip($employee) {
-    //     $pdf = new FPDF();
-    //     $pdf->addPage();
-    //     $pdf->setFont('Arial', 'B', 15);
-    //     $pdf->cell(0, 10, 'Payslip for ' . $employee['employee_name'], 0, 1, 'C');
-    //     $pdf->setFont('Arial', '', 10);
-    //     $pdf->cell(0, 10, 'Employee ID: ' . $this->employeeId, 0, 1);
-    //     $pdf->cell(0, 10, 'Pay Period: ' . $this->payPeriodStart . ' to ' . $this->payPeriodEnd, 0, 1);
-    //     $pdf->cell(0, 10, 'Hours Worked: ' . $this->hoursWorked, 0, 1);
-    //     $pdf->cell(0, 10, 'Overtime Hours: ' . $this->overtimeHours, 0, 1);
-    //     $pdf->cell(0, 10, 'Total Earnings: Rs. ' . $this->totalEarnings, 0, 1);
-    //     $pdf->cell(0, 10, 'Deductions: Rs. ' . $this->deductions, 0, 1);
-    //     $pdf->cell(0, 10, 'Net Pay: Rs. ' . $this->netPay, 0, 1);
-    //     return $pdf->output('S');
-    // }
 
     public function toArray() {
         return [

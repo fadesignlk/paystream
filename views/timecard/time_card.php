@@ -4,10 +4,12 @@ require_once __DIR__ . '/../../autoload.php';
 require_once __DIR__ . '/../../database/DatabaseHandler.php';
 require_once __DIR__ . '/../../controllers/TimeCardController.php';
 require_once __DIR__ . '/../../controllers/EmployeeController.php';
+require_once __DIR__ . '/../../utils/Logger.php';
 
 $dbHandler = new DatabaseHandler(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 $timeCardController = new TimeCardController($dbHandler);
 $employeeController = new EmployeeController($dbHandler);
+$logger = new Logger(__DIR__ . '/../../logs/time_card.log');
 
 $timeCards = $timeCardController->getAllTimeCards();
 
@@ -44,20 +46,26 @@ include __DIR__ . '/../components/header.php';
                 foreach ($timeCards as $timeCard):
                     $reportedHours = '';
                     $overtime = '';
+                    $employee = $employeeController->getEmployeeById($timeCard->getEmployeeId());
+
+                    $clockInDateTime = new DateTime($timeCard->getClockInDate() . ' ' . $timeCard->getClockInTime());
+                    $clockOutDateTime = new DateTime($timeCard->getClockOutDate() . ' ' . $timeCard->getClockOutTime());
                     if ($timeCard->getClockInTime() && $timeCard->getClockOutTime()) {
-                        $clockInDateTime = new DateTime($timeCard->getClockInDate() . ' ' . $timeCard->getClockInTime());
-                        $clockOutDateTime = new DateTime($timeCard->getClockOutDate() . ' ' . $timeCard->getClockOutTime());
                         $interval = $clockInDateTime->diff($clockOutDateTime);
                         $reportedHours = $interval->format('%h hours %i minutes');
                         $totalMinutes = ($interval->h * 60) + $interval->i;
+
                         if ($totalMinutes > 480) { // 480 minutes = 8 hours
                             $overtimeMinutes = $totalMinutes - 480;
                             $overtime = floor($overtimeMinutes / 60) . ' hours ' . ($overtimeMinutes % 60) . ' minutes';
                         } else {
                             $overtime = '0 hours 0 minutes';
                         }
-                        $employee = $employeeController->getEmployeeById($timeCard->getEmployeeId());
+                    }else{
+                        $reportedHours = '0 hours 0 minutes';
+                        $overtime = '0 hours 0 minutes';
                     }
+                    
                     ?>
                     <tr>
                         <td><?php echo htmlspecialchars($timeCard->getEmployeeId()); ?></td>

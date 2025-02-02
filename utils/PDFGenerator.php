@@ -35,4 +35,26 @@ class PDFGenerator extends FPDF {
         $this->Cell(0, 10, 'Deductions: Rs. ' . $payroll->getDeductions(), 0, 1);
         $this->Cell(0, 10, 'Net Pay: Rs. ' . $payroll->getNetPay(), 0, 1);
     }
+
+    public function addInvalidTimecardNotice($employee, $timecards, $payPeriodStart, $payPeriodEnd) {
+        $this->AddPage();
+        $this->SetFont('Arial', '', 12);
+
+        // Employee details
+        $this->Cell(0, 10, 'Employee Name: ' . $employee['employee_name'], 0, 1);
+        $this->Cell(0, 10, 'Employee ID: ' . $employee['employee_id'], 0, 1);
+        $this->Cell(0, 10, 'Pay Period: ' . $payPeriodStart . ' to ' . $payPeriodEnd, 0, 1);
+        $this->Ln(10);
+
+        // Invalid timecard notice
+        $this->SetFont('Arial', 'B', 12);
+        $this->Cell(0, 10, 'Invalid Timecard Records', 0, 1);
+        $this->SetFont('Arial', '', 12);
+        $this->Cell(0, 10, 'The following timecard records are invalid and cannot be processed:', 0, 1);
+        $this->Ln(10);
+
+        foreach ($timecards as $timecard) {
+            $this->Cell(0, 10, 'Date: ' . $timecard['clock_in_date'] . ', Clock In: ' . $timecard['clock_in_time'] . ', Clock Out: ' . $timecard['clock_out_date'] . ', Reported Hours: ' . $timecard['reported_hours'], 0, 1);
+        }
+    }
 }

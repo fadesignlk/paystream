@@ -74,4 +74,16 @@ class TimeCardRepository {
         $this->logger->log("Time cards fetched: " . json_encode($timeCards));
         return $timeCards;
     }
+
+    public function findByEmployeeIdAndPeriod($employeeId, $payPeriodStart, $payPeriodEnd) {
+        $stmt = $this->dbHandler->prepare("SELECT * FROM time_cards WHERE employee_id = ? AND (clock_in_date >= ? OR clock_out_date <= ?)");
+        $stmt->bind_param("iss", $employeeId, $payPeriodStart, $payPeriodEnd);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $timecards = [];
+        while ($row = $result->fetch_assoc()) {
+            $timecards[] = $row;
+        }
+        return $timecards;
+    }
 }
