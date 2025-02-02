@@ -14,11 +14,16 @@ class PayrollRepository {
 
     public function save(Payroll $payroll) {
         $stmt = $this->dbHandler->prepare("INSERT INTO payroll (employee_id, pay_period_start, pay_period_end, hours_worked, overtime_hours, total_earnings, deductions, net_pay) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("isssdddd", $payroll->getEmployeeId(), $payroll->getPayPeriodStart(), $payroll->getPayPeriodEnd(), $payroll->getHoursWorked(), $payroll->getOvertimeHours(), $payroll->getTotalEarnings(), $payroll->getDeductions(), $payroll->getNetPay());
+        $payrollArray = $payroll->toArray();
+        $stmt->bind_param("isssdddd", $payrollArray['employee_id'], $payrollArray['pay_period_start'], $payrollArray['pay_period_end'], $payrollArray['hours_worked'], $payrollArray['overtime_hours'], $payrollArray['total_earnings'], $payrollArray['deductions'], $payrollArray['net_pay']);
         if ($stmt->execute()) {
-            $this->logger->log("Payroll saved: " . json_encode($payroll));
+            $payrollId = $stmt->insert_id;
+            $payroll->setPayrollId($payrollId);
+            $this->logger->log("Payroll saved: " . json_encode($payrollArray));
+            return $payroll;
         } else {
             $this->logger->log("Error saving payroll: " . $stmt->error);
+            return null;
         }
     }
 

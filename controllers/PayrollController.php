@@ -26,9 +26,13 @@ class PayrollController {
 
         $payroll = new Payroll(null, $employeeId, $payPeriodStart, $payPeriodEnd);
         $payroll->calculatePayroll($employee, $clockings);
-        $this->payrollRepository->save($payroll);
+        $savedPayroll = $this->payrollRepository->save($payroll);
 
-        return $payroll;
+        if ($savedPayroll) {
+            return $savedPayroll->generatePayslip($employee);
+        }
+
+        return null;
     }
 
     public function generatePayslip($payrollId) {

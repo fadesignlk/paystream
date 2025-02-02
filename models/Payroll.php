@@ -39,7 +39,7 @@ class Payroll {
             $this->hoursWorked = 8;
         }
 
-        $this->totalEarnings = ($this->hoursWorked * $employee->getRate()) + ($this->overtimeHours * $employee->getRate() * 1.5);
+        $this->totalEarnings = ($this->hoursWorked * $employee['employee_rate']) + ($this->overtimeHours * $employee['employee_rate'] * 1.5);
         $this->netPay = $this->totalEarnings - $this->deductions;
     }
 
@@ -47,7 +47,7 @@ class Payroll {
         $pdf = new FPDF();
         $pdf->addPage();
         $pdf->setFont('Arial', 'B', 12);
-        $pdf->cell(0, 10, 'Payslip for ' . $employee->getName(), 0, 1, 'C');
+        $pdf->cell(0, 10, 'Payslip for ' . $employee['employee_name'], 0, 1, 'C');
         $pdf->setFont('Arial', '', 10);
         $pdf->cell(0, 10, 'Employee ID: ' . $this->employeeId, 0, 1);
         $pdf->cell(0, 10, 'Pay Period: ' . $this->payPeriodStart . ' to ' . $this->payPeriodEnd, 0, 1);
@@ -57,6 +57,20 @@ class Payroll {
         $pdf->cell(0, 10, 'Deductions: $' . $this->deductions, 0, 1);
         $pdf->cell(0, 10, 'Net Pay: $' . $this->netPay, 0, 1);
         return $pdf->output('S');
+    }
+
+    public function toArray() {
+        return [
+            'payroll_id' => $this->payrollId,
+            'employee_id' => $this->employeeId,
+            'pay_period_start' => $this->payPeriodStart,
+            'pay_period_end' => $this->payPeriodEnd,
+            'hours_worked' => $this->hoursWorked,
+            'overtime_hours' => $this->overtimeHours,
+            'total_earnings' => $this->totalEarnings,
+            'deductions' => $this->deductions,
+            'net_pay' => $this->netPay,
+        ];
     }
 
     public function getPayrollId() { return $this->payrollId; }
@@ -69,6 +83,7 @@ class Payroll {
     public function getDeductions() { return $this->deductions; }
     public function getNetPay() { return $this->netPay; }
 
+    public function setPayrollId($payrollId){$this->payrollId = $payrollId;}
     public function setHoursWorked($hoursWorked){$this->hoursWorked = $hoursWorked;}
     public function setOvertimeHours($overtimeHours){$this->overtimeHours = $overtimeHours;}
     public function setTotalEarnings($totalEarnings){$this->totalEarnings = $totalEarnings;}

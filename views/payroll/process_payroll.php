@@ -18,14 +18,15 @@ $employeeController = new EmployeeController($dbHandler);
 $errors = [];
 $successMessage = '';
 $employees = $employeeController->getAllEmployees();
+$payslip = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $employeeId = $_POST['employee_id'];
     $payPeriodStart = $_POST['pay_period_start'];
     $payPeriodEnd = $_POST['pay_period_end'];
 
-    $payroll = $payrollController->processPayroll($employeeId, $payPeriodStart, $payPeriodEnd);
-    if ($payroll) {
+    $payslip = $payrollController->processPayroll($employeeId, $payPeriodStart, $payPeriodEnd);
+    if ($payslip) {
         $successMessage = 'Payroll processed successfully.';
     } else {
         $errors[] = 'Error processing payroll.';
@@ -51,6 +52,10 @@ include __DIR__ . '/../components/header.php';
     <?php if (!empty($successMessage)): ?>
         <div class="alert alert-success">
             <?php echo $successMessage; ?>
+        </div>
+        <div class="mt-4">
+            <h2>Payslip</h2>
+            <embed src="data:application/pdf;base64,<?php echo base64_encode($payslip); ?>" type="application/pdf" width="100%" height="600px" />
         </div>
     <?php endif; ?>
 
