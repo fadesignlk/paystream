@@ -23,17 +23,21 @@ include __DIR__ . '../../components/header.php';
 
 <div class="container mt-4">
     <h1 class="mb-4">User Profile</h1>
-    <?php if ($userData): ?>
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title"><?php echo htmlspecialchars($userData['first_name']) . ' ' . htmlspecialchars($userData['last_name']); ?></h5>
-                <p class="card-text"><strong>Email:</strong> <?php echo htmlspecialchars($userData['email']); ?></p>
-                <!-- Add more fields as necessary -->
+    <div class="row">
+        <div class="col-md-6">
+            <?php if ($userData): ?>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><?php echo htmlspecialchars($userData['first_name']) . ' ' . htmlspecialchars($userData['last_name']); ?></h5>
+                    <p class="card-text"><strong>Email:</strong> <?php echo htmlspecialchars($userData['email']); ?></p>
+                    <!-- Add more fields as necessary -->
+                </div>
             </div>
+            <?php else: ?>
+                <div class="alert alert-danger">User not found.</div>
+            <?php endif; ?>
         </div>
-    <?php else: ?>
-        <div class="alert alert-danger">User not found.</div>
-    <?php endif; ?>
+    </div>
 </div>
 
 <?php include __DIR__ . '../../components/footer.php'; ?>

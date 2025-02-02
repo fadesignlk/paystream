@@ -52,11 +52,6 @@ To get started with PayStream, follow these steps:
 
 We welcome contributions to improve PayStream. If you would like to contribute, please fork the repository and submit a pull request with your changes.
 
-### License
-
-This project is licensed under the MIT License. See the [LICENSE] file for more details.
-
-
 ### Explanation
 
 - **Description**: Provides a brief overview of what PayStream is and its purpose.
