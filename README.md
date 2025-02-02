@@ -32,21 +32,21 @@ To get started with PayStream, follow these steps:
    git clone https://github.com/fadesignlk/paystream.git
 
 2. Navigate to the project directory:
-
-cd paystream
+    ```sh
+    cd paystream
 
 3. Set up the database:
 
-- Create a MySQL database.
-- Import the provided SQL file to set up the necessary tables.
+    - Create a MySQL database.
+    - Import the provided SQL file to set up the necessary tables.
 
 4. Configure the application:
 
-- Update the database configuration in config.php.
+    - Update the database configuration in config.php.
 
 5. Start the application:
 
-- Open the project in your web browser.
+    - Open the project in your web browser.
 
 ### Contributing
 
@@ -65,5 +65,3 @@ This project is licensed under the MIT License. See the LICENSE file for more de
 - **Getting Started**: Provides instructions on how to set up and start the application.
 - **Contributing**: Encourages contributions and provides instructions on how to contribute.
 - **License**: Mentions the license under which the project is distributed.
-
-By adding this description to your [README.md](http://_vscodecontentref_/1) file, you provide a clear and concise overview of the PayStream system, making it easier for others to understand and use the project.
