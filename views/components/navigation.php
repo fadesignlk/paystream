@@ -21,6 +21,9 @@
                     <a class="nav-link" href="/paystream/views/timecard/time_card.php">Time Cards</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="/paystream/views/payroll/process_payroll.php">Process payroll</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/paystream/views/user/profile.php">Profile</a>
                 </li>
                 <li class="nav-item">

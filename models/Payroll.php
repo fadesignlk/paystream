@@ -1,7 +1,6 @@
 <?php
 
-
-// classes/Payroll.php
+require_once __DIR__ . '/../utils/fpdf/fpdf.php';
 class Payroll {
     private $payrollId;
     private $employeeId;
@@ -42,6 +41,22 @@ class Payroll {
 
         $this->totalEarnings = ($this->hoursWorked * $employee->getRate()) + ($this->overtimeHours * $employee->getRate() * 1.5);
         $this->netPay = $this->totalEarnings - $this->deductions;
+    }
+
+    public function generatePayslip($employee) {
+        $pdf = new FPDF();
+        $pdf->addPage();
+        $pdf->setFont('Arial', 'B', 12);
+        $pdf->cell(0, 10, 'Payslip for ' . $employee->getName(), 0, 1, 'C');
+        $pdf->setFont('Arial', '', 10);
+        $pdf->cell(0, 10, 'Employee ID: ' . $this->employeeId, 0, 1);
+        $pdf->cell(0, 10, 'Pay Period: ' . $this->payPeriodStart . ' to ' . $this->payPeriodEnd, 0, 1);
+        $pdf->cell(0, 10, 'Hours Worked: ' . $this->hoursWorked, 0, 1);
+        $pdf->cell(0, 10, 'Overtime Hours: ' . $this->overtimeHours, 0, 1);
+        $pdf->cell(0, 10, 'Total Earnings: $' . $this->totalEarnings, 0, 1);
+        $pdf->cell(0, 10, 'Deductions: $' . $this->deductions, 0, 1);
+        $pdf->cell(0, 10, 'Net Pay: $' . $this->netPay, 0, 1);
+        return $pdf->output('S');
     }
 
     public function getPayrollId() { return $this->payrollId; }

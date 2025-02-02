@@ -11,6 +11,13 @@ $employeeController = new EmployeeController($dbHandler);
 
 $timeCards = $timeCardController->getAllTimeCards();
 
+if (!isset($_SESSION['user'])) {
+    header('Location: ' . BASE_URL . 'views/login.php');
+    exit();
+}
+
+$user = $_SESSION['user'];
+$loggedInUserId = $user->getUserId();
 
 $title = 'Time Cards';
 include __DIR__ . '/../components/header.php';

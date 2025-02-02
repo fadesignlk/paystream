@@ -1,11 +1,14 @@
 <?php
 require_once __DIR__ . '/../database/DatabaseHandler.php';
+require_once __DIR__ . '/../utils/Logger.php';
 
 class ClockingRepository {
     private $dbHandler;
+    private $logger;
 
     public function __construct($dbHandler) {
         $this->dbHandler = $dbHandler;
+        $this->logger = new Logger(__DIR__ . '/../logs/clocking_repository.log');
     }
 
     public function addClocking($clockingData) {
@@ -53,6 +56,20 @@ class ClockingRepository {
         $this->dbHandler->execute($stmt);
         $result = $this->dbHandler->getResult($stmt);
         return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function findByEmployeeIdAndPeriod($employeeId, $payPeriodStart, $payPeriodEnd) {
+        $this->logger->log("Finding clockings for employee ID: $employeeId, Pay Period: $payPeriodStart to $payPeriodEnd");
+        $stmt = $this->dbHandler->prepare("SELECT * FROM clockings WHERE employee_id = ? AND clocking_date BETWEEN ? AND ?");
+        $stmt->bind_param("iss", $employeeId, $payPeriodStart, $payPeriodEnd);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $clockings = [];
+        while ($row = $result->fetch_assoc()) {
+            $clockings[] = $row;
+        }
+        $this->logger->log("Clockings found: " . json_encode($clockings));
+        return $clockings;
     }
 }
 ?>

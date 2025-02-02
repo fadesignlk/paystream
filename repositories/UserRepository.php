@@ -13,7 +13,7 @@ class UserRepository {
     }
 
     public function getUserByUsername($username) {
-        $query = "SELECT user_id, username, first_name, last_name, email, created_at, updated_at, updated_by FROM users WHERE username = ?";
+        $query = "SELECT user_id, username, password, first_name, last_name, email, created_at, updated_at, updated_by FROM users WHERE username = ?";
         $stmt = $this->dbHandler->prepare($query);
         $stmt->bind_param("s", $username);
         $this->dbHandler->execute($stmt);

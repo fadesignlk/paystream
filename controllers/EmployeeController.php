@@ -28,7 +28,6 @@ class EmployeeController {
         return $this->employeeModel->getName($employeeId);
     }
 
-
     public function addEmployee($employeeData, $updatedBy) {
         return $this->employeeModel->addEmployee($employeeData, $updatedBy);
     }
