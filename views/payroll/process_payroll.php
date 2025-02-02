@@ -21,11 +21,10 @@ $employees = $employeeController->getAllEmployees();
 $payslip = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $employeeId = $_POST['employee_id'];
     $payPeriodStart = $_POST['pay_period_start'];
     $payPeriodEnd = $_POST['pay_period_end'];
 
-    $payslip = $payrollController->processPayroll($employeeId, $payPeriodStart, $payPeriodEnd);
+    $payslip = $payrollController->processPayrollForAllEmployees($payPeriodStart, $payPeriodEnd);
     if ($payslip) {
         $successMessage = 'Payroll processed successfully.';
     } else {
@@ -60,17 +59,6 @@ include __DIR__ . '/../components/header.php';
     <?php endif; ?>
 
     <form method="post" action="process_payroll.php">
-        <div class="mb-3">
-            <label for="employee_id" class="form-label">Employee</label>
-            <select id="employee_id" name="employee_id" class="form-select" required>
-                <?php
-                $employees = $employeeController->getAllEmployees();
-                foreach ($employees as $employee) {
-                    echo '<option value="' . htmlspecialchars($employee['employee_id']) . '">' . htmlspecialchars($employee['employee_name']) . '</option>';
-                }
-                ?>
-            </select>
-        </div>
         <div class="mb-3">
             <label for="pay_period_start" class="form-label">Pay Period Start</label>
             <input type="date" id="pay_period_start" name="pay_period_start" class="form-control" required>
