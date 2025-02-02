@@ -13,7 +13,7 @@ class UserRepository {
     }
 
     public function getUserByUsername($username) {
-        $query = "SELECT * FROM users WHERE username = ?";
+        $query = "SELECT user_id, username, first_name, last_name, email, created_at, updated_at, updated_by FROM users WHERE username = ?";
         $stmt = $this->dbHandler->prepare($query);
         $stmt->bind_param("s", $username);
         $this->dbHandler->execute($stmt);
@@ -22,8 +22,7 @@ class UserRepository {
     }
 
     public function findById($userId) {
-        $this->logger->log("Finding user by ID: $userId");
-        $stmt = $this->dbHandler->prepare("SELECT * FROM users WHERE user_id = ?");
+        $stmt = $this->dbHandler->prepare("SELECT user_id, username, first_name, last_name, email, created_at, updated_at, updated_by FROM users WHERE user_id = ?");
         $stmt->bind_param("i", $userId);
         $stmt->execute();
         $result = $stmt->get_result();
