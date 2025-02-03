@@ -27,6 +27,10 @@ class Payroll {
             $clockInTime = strtotime($timecard['clock_in_time']);
             $clockOutTime = strtotime($timecard['clock_out_time']);
             if ($clockInTime !== false && $clockOutTime !== false) {
+                // If clock out time is earlier than clock in time, it means the work period spans midnight
+                if ($clockOutTime < $clockInTime) {
+                    $clockOutTime += 86400; // Add 24 hours in seconds
+                }
                 $hoursWorked = ($clockOutTime - $clockInTime) / 3600; // Convert seconds to hours
                 $totalHours += $hoursWorked;
 

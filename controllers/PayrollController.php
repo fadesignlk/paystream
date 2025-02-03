@@ -23,25 +23,43 @@ class PayrollController {
     public function processPayrollForAllEmployees($payPeriodStart, $payPeriodEnd) {
         $employees = $this->employeeRepository->getAllEmployees();
         $pdf = new PDFGenerator();
+        $outputDir = __DIR__ . '/../output/';
+        $pdfFilePath = $outputDir . 'payslips_' . date('Y_m', strtotime($payPeriodStart)) . '.pdf';
+        $timecardsFound = false;
+
+        if (!file_exists($outputDir)) {
+            mkdir($outputDir, 0777, true);
+        }
         
         foreach ($employees as $employee) {
             $timecards = $this->timecardRepository->findByEmployeeIdAndPeriod($employee['employee_id'], $payPeriodStart, $payPeriodEnd);
+            
             if (!empty($timecards)) {
-                $this->logger->log("Processing payroll for employee  Pay Period: $payPeriodStart to $payPeriodEnd");
+                $this->logger->log("Processing payroll for employee {$employee['employee_id']} Pay Period: $payPeriodStart to $payPeriodEnd");
                 $isValid = $this->validateTimecards($timecards);
 
                 if ($isValid) {
+                    $timecardsFound = true;
                     $payroll = new Payroll(null, $employee['employee_id'], $payPeriodStart, $payPeriodEnd);
                     $payroll->calculatePayroll($employee, $timecards);
                     $this->payrollRepository->save($payroll);
-                    $pdf->addPayslip($employee, $payroll);
+
+                    $pdf->addPayslip($employee, $payroll, $timecards);
                 } else {
                     $pdf->addInvalidTimecardNotice($employee, $timecards, $payPeriodStart, $payPeriodEnd);
                 }
             }
         }
 
-        return $pdf->output('S');
+        if ($timecardsFound) {
+            $pdf->Output($pdfFilePath, 'F');
+            return true;
+        } else {
+            $this->logger->log("No timecards found for the selected pay period: $payPeriodStart to $payPeriodEnd");
+            return 'No timecards found for the selected pay period';
+        }
+        
+
     }
 
     private function validateTimecards($timecards) {

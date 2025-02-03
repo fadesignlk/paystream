@@ -21,14 +21,15 @@ $employees = $employeeController->getAllEmployees();
 $payslip = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $payPeriodStart = $_POST['pay_period_start'];
-    $payPeriodEnd = $_POST['pay_period_end'];
+    $selectedMonth = $_POST['month'];
+    $payPeriodStart = date('Y-m-01', strtotime($selectedMonth));
+    $payPeriodEnd = date('Y-m-t', strtotime($selectedMonth));
 
-    $payslip = $payrollController->processPayrollForAllEmployees($payPeriodStart, $payPeriodEnd);
-    if ($payslip) {
-        $successMessage = 'Payroll processed successfully.';
+    $result = $payrollController->processPayrollForAllEmployees($payPeriodStart, $payPeriodEnd);
+    if ($result === true) {
+        $successMessage = 'Payroll processed successfully. Payslips have been generated.';
     } else {
-        $errors[] = 'Error processing payroll.';
+        $errors[] = $result;
     }
 }
 
@@ -37,38 +38,34 @@ include __DIR__ . '/../components/header.php';
 ?>
 
 <div class="container mt-4">
-    <h1 class="mb-4">Process Payroll</h1>
-    <?php if (!empty($errors)): ?>
-        <div class="alert alert-danger">
-            <ul>
-                <?php foreach ($errors as $error): ?>
-                    <li><?php echo $error; ?></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    <?php endif; ?>
+    <div class="row">
+        <div class="col-md-4">
+        <h1 class="mb-4">Process Payroll</h1>
+        <?php if (!empty($errors)): ?>
+            <div class="alert alert-danger">
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <?php foreach ($errors as $error): ?>
+                        <li><?php echo $error; ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
 
-    <?php if (!empty($successMessage)): ?>
-        <div class="alert alert-success">
-            <?php echo $successMessage; ?>
-        </div>
-        <div class="mt-4">
-            <h2>Payslip</h2>
-            <embed src="data:application/pdf;base64,<?php echo base64_encode($payslip); ?>" type="application/pdf" width="100%" height="600px" />
-        </div>
-    <?php endif; ?>
+        <?php if (!empty($successMessage)): ?>
+            <div class="alert alert-success">
+                <?php echo $successMessage; ?>
+            </div>
+        <?php endif; ?>
 
-    <form method="post" action="process_payroll.php">
-        <div class="mb-3">
-            <label for="pay_period_start" class="form-label">Pay Period Start</label>
-            <input type="date" id="pay_period_start" name="pay_period_start" class="form-control" required>
+        <form method="post" action="process_payroll.php">
+            <div class="mb-3">
+                <label for="month" class="form-label">Select Month</label>
+                <input type="month" id="month" name="month" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Process Payroll</button>
+        </form>
         </div>
-        <div class="mb-3">
-            <label for="pay_period_end" class="form-label">Pay Period End</label>
-            <input type="date" id="pay_period_end" name="pay_period_end" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Process Payroll</button>
-    </form>
+    </div>
 </div>
 
 <?php include __DIR__ . '/../components/footer.php'; ?>

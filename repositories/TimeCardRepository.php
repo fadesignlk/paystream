@@ -76,9 +76,18 @@ class TimeCardRepository {
     }
 
     public function findByEmployeeIdAndPeriod($employeeId, $payPeriodStart, $payPeriodEnd) {
-        $stmt = $this->dbHandler->prepare("SELECT * FROM time_cards WHERE employee_id = ? AND (clock_in_date >= ? OR clock_out_date <= ?)");
-        $stmt->bind_param("iss", $employeeId, $payPeriodStart, $payPeriodEnd);
-        $stmt->execute();
+        $stmt = $this->dbHandler->prepare("
+        SELECT * FROM time_cards 
+        WHERE employee_id = ? 
+        AND (
+            (clock_in_date BETWEEN ? AND ?) 
+            OR (clock_out_date BETWEEN ? AND ?)
+            OR (clock_in_date <= ? AND clock_out_date >= ?)
+            OR (clock_in_date BETWEEN ? AND ? AND clock_out_date IS NULL)
+        )
+    ");
+    $stmt->bind_param("issssssss", $employeeId, $payPeriodStart, $payPeriodEnd, $payPeriodStart, $payPeriodEnd, $payPeriodStart, $payPeriodEnd, $payPeriodStart, $payPeriodEnd);
+    $stmt->execute();
         $result = $stmt->get_result();
         $timecards = [];
         while ($row = $result->fetch_assoc()) {
