@@ -4,59 +4,66 @@
 </div>
 
 ## Description
+PayStream is a comprehensive payroll management system designed to streamline the payroll process for businesses. It allows for efficient management of employee data, clocking, timecards, and payroll processing.
 
-PayStream is a comprehensive payroll management system designed to simplify and automate the payroll process for businesses of all sizes. With PayStream, you can efficiently manage employee information, track clock-in and clock-out times, calculate working hours, and generate accurate payroll reports.
+## Key Features
+- **Add Employee**: Add new employees to the system.
+- **Manage Employees**: View and manage existing employees.
+- **Manage Clocking**: View and manage clocking data.
+- **Time Card**: View and manage time cards.
+- **Process Payroll**: Process payroll for all employees for a selected month.
+- **View Payslips**: View and download payslips for employees.
 
-### Key Features
-
-- **Employee Management**: Easily add, update, and manage employee details including personal information, contact details, and payment methods.
-- **Clocking System**: Track employee attendance with a robust clock-in and clock-out system, ensuring accurate timekeeping.
-- **Time Cards**: Automatically generate time cards based on clocking data, providing a clear overview of hours worked and overtime.
-- **Payroll Calculation**: Calculate payroll accurately based on employee rates, hours worked, and overtime, reducing the risk of errors.
-- **User Profiles**: Allow employees to view and update their personal profiles, ensuring that their information is always up-to-date.
-- **Audit Logs**: Maintain a detailed log of all actions performed within the system for transparency and accountability.
-
-### Technologies Used
-
+## Technologies Used
 - **Backend**: PHP
-- **Frontend**: HTML, CSS, JavaScript
+- **Frontend**: HTML, CSS, JavaScript, Bootstrap
 - **Database**: MySQL
-- **Version Control**: Git
+- **PDF Generation**: FPDF
 
-### Getting Started
+## Getting Started
+### Prerequisites
+- XAMPP or any other local server environment
+- Composer for dependency management
 
-To get started with PayStream, follow these steps:
-
+### Installation
 1. Clone the repository:
-   ```sh
-   git clone https://github.com/fadesignlk/paystream.git
-
+    ```bash
+    git clone https://github.com/fadesignlk/paystream.git
+    ```
 2. Navigate to the project directory:
-    ```sh
+    ```bash
     cd paystream
+    ```
+3. Install dependencies:
+    ```bash
+    composer install
+    ```
+4. Set up the database:
+    - Import the `database.sql` file located in the `database` directory into your MySQL database.
+    - Update the database configuration in `config.php`.
 
-3. Set up the database:
+5. Start the local server:
+    - Open XAMPP and start Apache and MySQL.
 
-    - Create a MySQL database.
-    - Import the provided SQL file to set up the necessary tables.
+6. Access the application:
+    - Open your web browser and navigate to `http://localhost/paystream`.
 
-4. Configure the application:
+## Contributing
+We welcome contributions to enhance the functionality of PayStream. To contribute, please follow these steps:
+1. Fork the repository.
+2. Create a new branch:
+    ```bash
+    git checkout -b feature/your-feature-name
+    ```
+3. Make your changes and commit them:
+    ```bash
+    git commit -m "Add your commit message"
+    ```
+4. Push to the branch:
+    ```bash
+    git push origin feature/your-feature-name
+    ```
+5. Open a pull request.
 
-    - Update the database configuration in config.php.
-
-5. Start the application:
-
-    - Open the project in your web browser.
-
-### Contributing
-
-We welcome contributions to improve PayStream. If you would like to contribute, please fork the repository and submit a pull request with your changes.
-
-### Explanation
-
-- **Description**: Provides a brief overview of what PayStream is and its purpose.
-- **Key Features**: Lists the main features of the system.
-- **Technologies Used**: Lists the technologies used in the project.
-- **Getting Started**: Provides instructions on how to set up and start the application.
-- **Contributing**: Encourages contributions and provides instructions on how to contribute.
-- **License**: Mentions the license under which the project is distributed.
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

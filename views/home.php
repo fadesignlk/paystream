@@ -67,7 +67,28 @@ include __DIR__ . '/components/header.php';
                 </div>
             </a>
         </div>
-        <!-- Add more feature tiles as needed -->
+        <div class="col-md-3">
+            <a href="./payroll/process_payroll.php" class="card mb-4 text-decoration-none text-dark">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-file-invoice-dollar fa-3x"></i>
+                    </div>
+                    <h5 class="card-title">Process Payroll</h5>
+                    <p class="card-text">Process payroll for all employees.</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a href="./payroll/view_payslips.php" class="card mb-4 text-decoration-none text-dark">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="fas fa-file-pdf fa-3x"></i>
+                    </div>
+                    <h5 class="card-title">View Payslips</h5>
+                    <p class="card-text">View and download payslips.</p>
+                </div>
+            </a>
+        </div>
     </div>
 </div>
 
